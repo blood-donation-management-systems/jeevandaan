@@ -1,0 +1,37 @@
+# Sensitive Configuration
+app/config/config.php
+
+# User Uploads
+public/uploads/id_cards/*
+public/uploads/certificates/*
+public/uploads/profile_pics/*
+app/uploads/*
+
+# Composer
+vendor/
+composer.lock
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Database Backups
+*.sql.bak
+*.dump
+
+# Bash Setup Scripts
+*.sh
+
+# Temporary Files
+*.tmp
+*.temp
