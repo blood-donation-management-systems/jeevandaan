@@ -7,6 +7,17 @@
                 <?php echo $flash['message']; ?>
             </div>
         <?php endif; ?>
+
+        <?php if (($user['blood_group'] ?? '') === 'O-'): ?>
+            <div class="universal-donor-banner">
+                <div class="universal-donor-icon">🩸</div>
+                <div class="universal-donor-text">
+                    <strong>You are a Universal Donor</strong>
+                    <span>Your O- blood can save anyone in an emergency. We may contact you directly in critical situations.</span>
+                </div>
+                <div class="universal-donor-badge">Universal Donor</div>
+            </div>
+        <?php endif; ?>
         
         <div class="dashboard-header">
             <div class="welcome-section">
@@ -16,6 +27,9 @@
                         <span class="verified-badge"><i class="fas fa-check-circle"></i> Verified Donor</span>
                     <?php else: ?>
                         <span class="pending-badge"><i class="fas fa-clock"></i> Verification Pending</span>
+                    <?php endif; ?>
+                    <?php if (($user['blood_group'] ?? '') === 'O-'): ?>
+                        <span class="universal-donor-pill" title="O- is the universal donor blood type">🩸 Universal Donor</span>
                     <?php endif; ?>
                 </p>
             </div>
@@ -98,9 +112,13 @@
                 <?php if (!empty($notifications)): ?>
                     <div class="notification-list">
                         <?php foreach ($notifications as $notif): ?>
-                            <div class="notification-item <?php echo $notif['is_read'] ? '' : 'unread'; ?>">
+                            <div class="notification-item <?php echo $notif['is_read'] ? '' : 'unread'; ?> <?php echo $notif['type'] === 'universal_donor' ? 'universal-donor-notif' : ''; ?>">
                                 <div class="notification-icon">
-                                    <i class="fas fa-bell"></i>
+                                    <?php if ($notif['type'] === 'universal_donor'): ?>
+                                        <span style="font-size:20px;">🩸</span>
+                                    <?php else: ?>
+                                        <i class="fas fa-bell"></i>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="notification-content">
                                     <h4><?php echo htmlspecialchars($notif['title']); ?></h4>

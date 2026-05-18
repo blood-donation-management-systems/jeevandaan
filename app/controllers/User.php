@@ -150,6 +150,33 @@ class User extends Controller {
         
         if ($stmt->execute()) {
             $_SESSION['user_name'] = trim($_POST['full_name']);
+
+            // O- is the universal donor blood type — notify the donor if they just set it
+            if ($_POST['blood_group'] === 'O-') {
+                // Only send the notification once (check if one already exists for this user)
+                $checkStmt = $this->db->prepare(
+                    "SELECT id FROM notifications 
+                     WHERE recipient_id = ? AND recipient_type = 'user' AND type = 'universal_donor' 
+                     LIMIT 1"
+                );
+                $checkStmt->bind_param("i", $userId);
+                $checkStmt->execute();
+                $alreadyNotified = $checkStmt->get_result()->fetch_assoc();
+
+                if (!$alreadyNotified) {
+                    $notifStmt = $this->db->prepare(
+                        "INSERT INTO notifications 
+                         (recipient_id, recipient_type, type, title, message, link) 
+                         VALUES (?, 'user', 'universal_donor', 
+                         '🩸 You are a Universal Donor!', 
+                         'Your blood type is O-, the rarest and most needed type. As a universal donor, your blood can be given to anyone in an emergency. We may reach out to you directly in critical situations. Thank you for being a lifesaver!', 
+                         '/user/profile')"
+                    );
+                    $notifStmt->bind_param("i", $userId);
+                    $notifStmt->execute();
+                }
+            }
+
             $this->setFlash('success', 'Profile updated successfully!');
         } else {
             $this->setFlash('error', 'Failed to update profile');
