@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Units Required *</label>
+                        <label>Units Required *(1 unit of blood ≈ 450 mL)</label>
                         <input type="number" name="units_required" class="form-control" value="1" min="1" max="10" required>
                     </div>
                 </div>
