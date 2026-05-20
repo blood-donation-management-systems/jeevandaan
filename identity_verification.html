@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Identity Verification | JeevanDaan</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <a href="index.html" class="logo"><img src="images/logo.png" alt="JeevanDaan" style="height:45px;width:auto;"><span>JeevanDaan</span></a>
+    <nav class="nav">
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#"><i class="fas fa-tint"></i> Blood Requests</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+        <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+      <div class="nav-auth"><a href="login.html" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a></div>
+    </nav>
+  </div>
+</header>
+<main class="main">
+
+<!-- IDENTITY VERIFICATION PAGE (LBDM-34) + DONATION CERTIFICATE UPLOAD (LBDM-35) -->
+<div class="profile-page">
+    <div class="container">
+
+        <div class="page-header">
+            <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+            <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+
+        <!-- Verification Status Banner -->
+        <div class="verification-card pending">
+            <i class="fas fa-clock"></i>
+            <div>
+                <h3>Verification Pending</h3>
+                <p>Please upload your Nagarikta for verification.</p>
+            </div>
+        </div>
+
+        <form id="profileForm" enctype="multipart/form-data">
+
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2><i class="fas fa-user"></i> Personal Information</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" name="full_name" class="form-control" placeholder="Your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" placeholder="your@email.com" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone (Nepal) *</label>
+                        <input type="tel" name="phone" class="form-control" placeholder="98XXXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth *</label>
+                        <input type="date" name="date_of_birth" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender *</label>
+                        <select name="gender" class="form-control" required>
+                            <option value="">Select</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Blood Group *</label>
+                        <select name="blood_group" class="form-control" required>
+                            <option value="">Select</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option>
+                            <option>O+</option><option>O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg) *</label>
+                        <input type="number" name="weight" class="form-control" placeholder="e.g. 60" min="30" max="200" step="0.1" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Address -->
+            <div class="form-section">
+                <h2><i class="fas fa-map-marker-alt"></i> Address</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Province *</label>
+                        <select name="province" id="province" class="form-control" required>
+                            <option value="">Select Province</option>
+                            <option>Koshi</option><option>Madhesh</option>
+                            <option>Bagmati</option><option>Gandaki</option>
+                            <option>Lumbini</option><option>Karnali</option>
+                            <option>Sudurpashchim</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>District *</label>
+                        <select name="district" id="district" class="form-control" required>
+                            <option value="">Select District</option>
+                            <option>Kathmandu</option><option>Lalitpur</option><option>Bhaktapur</option>
+                            <option>Pokhara</option><option>Chitwan</option><option>Morang</option>
+                            <option>Sunsari</option><option>Kaski</option><option>Rupandehi</option>
+                            <option>Kailali</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Municipality *</label>
+                        <input type="text" name="municipality" class="form-control" placeholder="e.g. Kathmandu Metropolitan" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ward No. *</label>
+                        <input type="number" name="ward_no" class="form-control" placeholder="e.g. 5" min="1" max="33" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Tole / Street</label>
+                        <input type="text" name="tole" class="form-control" placeholder="e.g. Baneshwor, Kathmandu">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Information -->
+            <div class="form-section">
+                <h2><i class="fas fa-heartbeat"></i> Health Information</h2>
+                <div class="form-group">
+                    <label>Last Donation Date</label>
+                    <input type="date" name="last_donation_date" class="form-control">
+                </div>
+                <div class="health-checkboxes">
+                    <span class="health-warning"><i class="fas fa-exclamation-triangle"></i> Do you have any of these conditions?</span>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label"><input type="checkbox" name="has_hiv"><span>HIV/AIDS</span></label>
+                        <label class="checkbox-label"><input type="checkbox" name="has_hepatitis_b"><span>Hepatitis B</span></label>
+                        <label class="checkbox-label"><input type="checkbox" name="has_hepatitis_c"><span>Hepatitis C</span></label>
+                        <label class="checkbox-label"><input type="checkbox" name="has_diabetes"><span>Diabetes</span></label>
+                        <label class="checkbox-label"><input type="checkbox" name="has_hypertension"><span>Hypertension</span></label>
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top:20px;">
+                    <label>Other Diseases</label>
+                    <textarea name="other_diseases" class="form-control" rows="3" placeholder="Any other medical conditions..."></textarea>
+                </div>
+            </div>
+
+            <!-- Identity Verification (LBDM-34) + Donation Certificate Upload (LBDM-35) -->
+            <div class="form-section">
+                <h2><i class="fas fa-id-card"></i> Identity Verification</h2>
+                <p style="color:var(--secondary);margin-bottom:20px;">Upload clear photos of your Nagarikta (Citizenship Card)</p>
+                <div class="upload-grid">
+                    <!-- Nagarikta Front -->
+                    <div class="upload-box">
+                        <label>Nagarikta Front *</label>
+                        <div class="upload-area" id="frontArea" onclick="document.getElementById('citizenship_front').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload</span>
+                            <small style="color:var(--secondary);font-size:0.8rem;">JPG, PNG accepted</small>
+                        </div>
+                        <input type="file" name="citizenship_front" id="citizenship_front" accept="image/*" style="display:none;">
+                    </div>
+                    <!-- Nagarikta Back -->
+                    <div class="upload-box">
+                        <label>Nagarikta Back *</label>
+                        <div class="upload-area" id="backArea" onclick="document.getElementById('citizenship_back').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload</span>
+                            <small style="color:var(--secondary);font-size:0.8rem;">JPG, PNG accepted</small>
+                        </div>
+                        <input type="file" name="citizenship_back" id="citizenship_back" accept="image/*" style="display:none;">
+                    </div>
+                    <!-- Donation Certificate (LBDM-35) -->
+                    <div class="upload-box">
+                        <label>Previous Donation Certificate <span style="color:var(--secondary);font-size:0.85rem;">(Optional)</span></label>
+                        <div class="upload-area" id="certArea" onclick="document.getElementById('donation_certificate').click()">
+                            <i class="fas fa-certificate"></i>
+                            <span>Click to upload</span>
+                            <small style="color:var(--secondary);font-size:0.8rem;">If you've donated before</small>
+                        </div>
+                        <input type="file" name="donation_certificate" id="donation_certificate" accept="image/*" style="display:none;">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferences -->
+            <div class="form-section">
+                <h2><i class="fas fa-cog"></i> Preferences</h2>
+                <div class="preferences-grid">
+                    <label class="switch-label">
+                        <input type="checkbox" name="willing_to_donate" checked>
+                        <span class="switch"></span>
+                        <span>I am willing to donate blood</span>
+                    </label>
+                    <label class="switch-label">
+                        <input type="checkbox" name="receive_notifications" checked>
+                        <span class="switch"></span>
+                        <span>Receive notifications for blood requests</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save"></i> Save Profile
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-section"><h3><i class="fas fa-hand-holding-heart"></i> JeevanDaan</h3><p>जीवनदान - Gift of Life</p><p>Connecting blood donors with those in need across Nepal.</p></div>
+      <div class="footer-section"><h4>Quick Links</h4><ul><li><a href="#">Blood Requests</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      <div class="footer-section"><h4>Blood Groups</h4><div class="blood-groups"><span class="blood-badge">A+</span><span class="blood-badge">A-</span><span class="blood-badge">B+</span><span class="blood-badge">B-</span><span class="blood-badge">AB+</span><span class="blood-badge">AB-</span><span class="blood-badge">O+</span><span class="blood-badge">O-</span></div></div>
+      <div class="footer-section"><h4>Contact</h4><p><i class="fas fa-envelope"></i> info@jeevandaan.org.np</p><p><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 JeevanDaan. Created by Devcore team</p></div>
+  </div>
+</footer>
+
+<script>
+// Image preview on upload
+function setupUploadPreview(inputId, areaId) {
+    document.getElementById(inputId).addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            var area = document.getElementById(areaId);
+            reader.onload = function(e) {
+                area.innerHTML = '<img src="' + e.target.result + '" style="max-width:100%;max-height:150px;object-fit:cover;border-radius:5px;"><span class="uploaded-badge"><i class="fas fa-check"></i> Uploaded</span>';
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+}
+setupUploadPreview('citizenship_front', 'frontArea');
+setupUploadPreview('citizenship_back', 'backArea');
+setupUploadPreview('donation_certificate', 'certArea');
+</script>
+</body>
+</html>

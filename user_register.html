@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | JeevanDaan - Blood Donation Nepal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .password-wrapper { position: relative; }
+        .password-wrapper input { padding-right: 45px; }
+        .password-toggle {
+            position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+            background: none; border: none; cursor: pointer; color: var(--secondary);
+            font-size: 1.1rem; padding: 5px;
+        }
+        .password-toggle:hover { color: var(--primary); }
+        .terms-scroll-box {
+            max-height: 200px; overflow-y: auto; padding: 15px;
+            border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;
+            font-size: 0.85rem; line-height: 1.6; margin-bottom: 15px;
+        }
+        .terms-scroll-box p { margin-bottom: 12px; }
+        .terms-scroll-box strong { color: var(--primary); }
+        .terms-checkbox-wrapper {
+            display: flex; align-items: flex-start; gap: 10px; padding: 12px;
+            background: #fff5f5; border: 2px solid var(--primary); border-radius: 8px; margin-bottom: 20px;
+        }
+        .terms-checkbox-wrapper input { width: 18px; height: 18px; margin-top: 3px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+        .terms-checkbox-wrapper label { font-size: 0.9rem; cursor: pointer; margin: 0 !important; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="JeevanDaan" style="height:45px;width:auto;">
+                <span>JeevanDaan</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-tint"></i> Blood Requests</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Learn</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                </ul>
+                <div class="nav-auth">
+                    <a href="login.html" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="auth-page">
+            <div class="container">
+                <div class="auth-card" style="max-width:550px;">
+                    <div class="auth-header">
+                        <i class="fas fa-user-plus" style="color:var(--success);font-size:3rem;"></i>
+                        <h1>Create Account</h1>
+                        <p>Join as a Blood Donor / Recipient</p>
+                    </div>
+                    <form action="#" id="registerForm">
+                        <div class="form-group">
+                            <label><i class="fas fa-user"></i> Full Name *</label>
+                            <input type="text" name="full_name" class="form-control" placeholder="Enter your full name" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-envelope"></i> Email *</label>
+                            <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Password *</label>
+                            <div class="password-wrapper">
+                                <input type="password" name="password" id="regPassword" class="form-control" placeholder="Minimum 6 characters" required minlength="6">
+                                <button type="button" class="password-toggle" onclick="togglePassword('regPassword', this)"><i class="fas fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-lock"></i> Confirm Password *</label>
+                            <div class="password-wrapper">
+                                <input type="password" name="confirm_password" id="regConfirmPassword" class="form-control" placeholder="Re-enter your password" required minlength="6">
+                                <button type="button" class="password-toggle" onclick="togglePassword('regConfirmPassword', this)"><i class="fas fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label style="display:flex;align-items:center;gap:8px;font-weight:600;color:var(--primary);margin-bottom:10px;">
+                                <i class="fas fa-file-contract"></i> Terms and Conditions
+                            </label>
+                            <div class="terms-scroll-box">
+                                <p><strong>1. Acceptance of Terms</strong><br>By accessing and using JeevanDaan's Blood Donation Management System, you agree to be bound by these Terms and Conditions.</p>
+                                <p><strong>2. Eligibility Requirements</strong><br>To donate blood through JeevanDaan, you must be at least 18 years of age, weigh at least 50 kg, be in good general health, and not have donated blood in the last 3 months.</p>
+                                <p><strong>3. Identity Verification</strong><br>All users must complete identity verification by submitting valid government-issued identification (citizenship card or passport).</p>
+                                <p><strong>4. Medical Screening</strong><br>All donated blood will undergo comprehensive testing including blood group, HIV, Hepatitis B and C, and hemoglobin testing.</p>
+                                <p><strong>5. Privacy and Data Protection</strong><br>Your data will be stored securely, used only for blood donation management, shared only with authorised Red Cross personnel, and never sold to third parties.</p>
+                                <p><strong>6. Donor Responsibilities</strong><br>Provide accurate health information, disclose medical conditions, follow pre and post-donation guidelines, and keep contact information up to date.</p>
+                                <p><strong>7. Donation Interval Responsibility</strong><br>If you have previously donated blood and attempt to donate again before the required minimum gap of <strong>3 months (90 days)</strong>, this is entirely your own responsibility.</p>
+                                <p><strong>8. Limitation of Liability</strong><br>JeevanDaan is not liable for unavailability of specific blood types, delays in processing, or system downtime.</p>
+                            </div>
+                            <div class="terms-checkbox-wrapper">
+                                <input type="checkbox" name="agree_terms" id="agreeTerms" required>
+                                <label for="agreeTerms">I have read and agree to the <strong>Terms and Conditions</strong> stated above. *</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block btn-lg" id="submitBtn" disabled>
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                    </form>
+                    <div style="text-align:center;margin:20px 0;">
+                        <p style="color:var(--secondary);margin-bottom:10px;">Already have an account?</p>
+                        <a href="user_login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Login</a>
+                    </div>
+                    <div style="display:flex;align-items:center;margin:20px 0;gap:15px;">
+                        <hr style="flex:1;border:none;border-top:2px solid #eee;">
+                        <span style="color:var(--secondary);font-weight:500;">OR</span>
+                        <hr style="flex:1;border:none;border-top:2px solid #eee;">
+                    </div>
+                    <a href="#" class="btn btn-block btn-lg" style="background:#4285f4;color:white;border:none;display:flex;align-items:center;justify-content:center;gap:12px;padding:15px;">
+                        <i class="fab fa-google" style="font-size:1.2rem;"></i><span>Sign up with Google</span>
+                    </a>
+                    <div style="text-align:center;margin-top:20px;">
+                        <a href="login.html" style="color:var(--secondary);font-size:0.9rem;"><i class="fas fa-arrow-left"></i> Back to Login Options</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3><i class="fas fa-hand-holding-heart"></i> JeevanDaan</h3>
+                    <p>जीवनदान - Gift of Life</p>
+                    <p>Connecting blood donors with those in need across Nepal.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Blood Requests</a></li>
+                        <li><a href="#">Learn</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Blood Groups</h4>
+                    <div class="blood-groups">
+                        <span class="blood-badge">A+</span><span class="blood-badge">A-</span>
+                        <span class="blood-badge">B+</span><span class="blood-badge">B-</span>
+                        <span class="blood-badge">AB+</span><span class="blood-badge">AB-</span>
+                        <span class="blood-badge">O+</span><span class="blood-badge">O-</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +977-1-XXXXXXX</p>
+                    <p><i class="fas fa-envelope"></i> info@jeevandaan.org.np</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 JeevanDaan. Created by Devcore team</p></div>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+    <script>
+    function togglePassword(inputId, btn) {
+        var input = document.getElementById(inputId);
+        var icon = btn.querySelector('i');
+        if (input.type === 'password') {
+            input.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye');
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var termsCheckbox = document.getElementById('agreeTerms');
+        var submitBtn = document.getElementById('submitBtn');
+        if (termsCheckbox && submitBtn) {
+            termsCheckbox.addEventListener('change', function() { submitBtn.disabled = !this.checked; });
+        }
+    });
+    </script>
+</body>
+</html>

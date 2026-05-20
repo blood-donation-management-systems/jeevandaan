@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP | JeevanDaan - Blood Donation Nepal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .otp-input-wrapper { display: flex; gap: 10px; justify-content: center; margin: 20px 0; }
+        .otp-digit { width: 50px; height: 60px; text-align: center; font-size: 24px; font-weight: bold; border: 2px solid #ddd; border-radius: 8px; }
+        .otp-digit:focus { border-color: var(--primary); outline: none; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="JeevanDaan" style="height:45px;width:auto;">
+                <span>JeevanDaan</span>
+            </a>
+            <nav class="nav">
+                <ul class="nav-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-tint"></i> Blood Requests</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Learn</a></li>
+                    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+                </ul>
+                <div class="nav-auth">
+                    <a href="login.html" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Login</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <div class="auth-page">
+            <div class="container">
+                <div class="auth-card" style="max-width:480px;">
+                    <div class="auth-header">
+                        <i class="fas fa-envelope-open-text" style="color:var(--info);font-size:3rem;"></i>
+                        <h1>Enter OTP</h1>
+                        <p>We sent a 6-digit code to your email</p>
+                    </div>
+                    <form id="otpForm" action="#">
+                        <div class="form-group">
+                            <label style="text-align:center;display:block;"><i class="fas fa-shield-alt"></i> Enter 6-Digit OTP</label>
+                            <div class="otp-input-wrapper">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="0" pattern="[0-9]" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="1" pattern="[0-9]" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="2" pattern="[0-9]" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="3" pattern="[0-9]" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="4" pattern="[0-9]" inputmode="numeric">
+                                <input type="text" maxlength="1" class="otp-digit" data-index="5" pattern="[0-9]" inputmode="numeric">
+                            </div>
+                            <input type="hidden" name="otp" id="otpHidden">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block btn-lg">
+                            <i class="fas fa-check"></i> Verify OTP
+                        </button>
+                    </form>
+                    <div style="text-align:center;margin-top:20px;">
+                        <p style="color:var(--secondary);font-size:0.9rem;">Didn't receive OTP?</p>
+                        <a href="forgot_password.html" style="color:var(--primary);"><i class="fas fa-redo"></i> Resend OTP</a>
+                    </div>
+                    <div style="text-align:center;margin-top:15px;">
+                        <small style="color:var(--secondary);">OTP expires in 10 minutes</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3><i class="fas fa-hand-holding-heart"></i> JeevanDaan</h3>
+                    <p>जीवनदान - Gift of Life</p>
+                    <p>Connecting blood donors with those in need across Nepal.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Blood Requests</a></li>
+                        <li><a href="#">Learn</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Blood Groups</h4>
+                    <div class="blood-groups">
+                        <span class="blood-badge">A+</span><span class="blood-badge">A-</span>
+                        <span class="blood-badge">B+</span><span class="blood-badge">B-</span>
+                        <span class="blood-badge">AB+</span><span class="blood-badge">AB-</span>
+                        <span class="blood-badge">O+</span><span class="blood-badge">O-</span>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> +977-1-XXXXXXX</p>
+                    <p><i class="fas fa-envelope"></i> info@jeevandaan.org.np</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal</p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 JeevanDaan. Created by Devcore team</p></div>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+    <script>
+    const inputs = document.querySelectorAll('.otp-digit');
+    const hiddenInput = document.getElementById('otpHidden');
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (this.value.length === 1 && index < inputs.length - 1) inputs[index + 1].focus();
+            updateHidden();
+        });
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value && index > 0) inputs[index - 1].focus();
+        });
+        input.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const digits = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+            digits.split('').forEach((digit, i) => { if (inputs[i]) inputs[i].value = digit; });
+            if (digits.length === 6) inputs[5].focus();
+            updateHidden();
+        });
+    });
+    function updateHidden() { let otp = ''; inputs.forEach(i => otp += i.value); hiddenInput.value = otp; }
+    document.getElementById('otpForm').addEventListener('submit', function(e) {
+        if (hiddenInput.value.length !== 6) { e.preventDefault(); alert('Please enter all 6 digits'); }
+    });
+    </script>
+</body>
+</html>
