@@ -37,7 +37,7 @@
                     </div>
                     <div class="form-group">
                         <label>Phone (Nepal) *</label>
-                        <input type="tel" name="phone" class="form-control" value="<?php echo htmlspecialchars($org['phone'] ?? ''); ?>" placeholder="98XXXXXXXX" required>
+                        <input type="tel" name="phone" class="form-control" value="<?php echo htmlspecialchars($org['phone'] ?? ''); ?>" placeholder="98XXXXXXXX" pattern="[0-9]{10}" maxlength="10" title="Phone must be exactly 10 digits" required>
                     </div>
                 </div>
             </div>
@@ -72,10 +72,10 @@
             </div>
 
             <div class="form-section">
-                <h2><i class="fas fa-id-card"></i> Organization ID Document (Optional)</h2>
+                <h2><i class="fas fa-id-card"></i> Organization ID Document *</h2>
                 <div class="upload-grid">
                     <div class="upload-box">
-                        <label>Registration Certificate</label>
+                        <label>Registration Certificate *</label>
                         <div class="upload-area" onclick="document.getElementById('organization_id_document').click()">
                             <?php if (!empty($org['organization_id_document'])): ?>
                                 <img src="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $org['organization_id_document']; ?>" alt="Org ID" style="max-width:100%;max-height:150px;">
@@ -85,7 +85,7 @@
                                 <span>Click to upload</span>
                             <?php endif; ?>
                         </div>
-                        <input type="file" name="organization_id_document" id="organization_id_document" accept="image/*" style="display:none;">
+                        <input type="file" name="organization_id_document" id="organization_id_document" accept="image/*" style="display:none;" <?php echo empty($org['organization_id_document']) ? 'required' : ''; ?>>
                     </div>
                 </div>
             </div>

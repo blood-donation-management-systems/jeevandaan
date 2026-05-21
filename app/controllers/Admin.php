@@ -213,7 +213,7 @@ class Admin extends Controller {
     
     public function donations() {
         $donations = $this->db->query("
-            SELECT do.*, u.full_name, u.email, u.phone, u.blood_group, u.district
+            SELECT do.*, u.full_name, u.email, u.phone, u.blood_group, u.district, u.is_eligible
             FROM donation_offers do
             JOIN users u ON do.user_id = u.id
             ORDER BY do.created_at DESC

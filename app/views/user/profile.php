@@ -30,7 +30,7 @@
                 <div class="form-grid">
                     <div class="form-group">
                         <label>Full Name *</label>
-                        <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user['full_name']); ?>" required>
+                        <input type="text" name="full_name" class="form-control" value="<?php echo htmlspecialchars($user['full_name']); ?>" pattern="[A-Za-z\s\.]+" title="Name can only contain letters, spaces, and dots" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
@@ -38,33 +38,42 @@
                     </div>
                     <div class="form-group">
                         <label>Phone (Nepal) *</label>
-                        <input type="tel" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>" placeholder="98XXXXXXXX" required>
+                        <input type="tel" name="phone" class="form-control" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>" placeholder="98XXXXXXXX" pattern="[0-9]{10}" maxlength="10" title="Phone must be exactly 10 digits" required>
                     </div>
                     <div class="form-group">
                         <label>Date of Birth *</label>
-                        <input type="date" name="date_of_birth" class="form-control" value="<?php echo $user['date_of_birth']; ?>" required>
+                        <input type="date" name="date_of_birth" class="form-control" value="<?php echo $user['date_of_birth']; ?>" max="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="form-group">
                         <label>Gender *</label>
-                        <select name="gender" class="form-control" required>
+                        <?php $isVerified = ($user['verification_status'] ?? '') === 'approved'; ?>
+                        <select name="gender" class="form-control" <?php echo $isVerified ? 'disabled' : ''; ?> required>
                             <option value="">Select</option>
                             <option value="male" <?php echo $user['gender'] === 'male' ? 'selected' : ''; ?>>Male</option>
                             <option value="female" <?php echo $user['gender'] === 'female' ? 'selected' : ''; ?>>Female</option>
                             <option value="other" <?php echo $user['gender'] === 'other' ? 'selected' : ''; ?>>Other</option>
                         </select>
+                        <?php if ($isVerified): ?>
+                            <small style="color:var(--secondary);font-size:11px;"><i class="fas fa-lock"></i> Locked after verification — contact admin to change</small>
+                            <input type="hidden" name="gender" value="<?php echo htmlspecialchars($user['gender']); ?>">
+                        <?php endif; ?>
                     </div>
                     <div class="form-group">
                         <label>Blood Group *</label>
-                        <select name="blood_group" class="form-control" required>
+                        <select name="blood_group" class="form-control" <?php echo $isVerified ? 'disabled' : ''; ?> required>
                             <option value="">Select</option>
                             <?php foreach (['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $bg): ?>
                                 <option value="<?php echo $bg; ?>" <?php echo $user['blood_group'] === $bg ? 'selected' : ''; ?>><?php echo $bg; ?></option>
                             <?php endforeach; ?>
                         </select>
+                        <?php if ($isVerified): ?>
+                            <small style="color:var(--secondary);font-size:11px;"><i class="fas fa-lock"></i> Locked after verification — contact admin to change</small>
+                            <input type="hidden" name="blood_group" value="<?php echo htmlspecialchars($user['blood_group']); ?>">
+                        <?php endif; ?>
                     </div>
                     <div class="form-group">
                         <label>Weight (kg) *</label>
-                        <input type="number" name="weight" class="form-control" value="<?php echo $user['weight']; ?>" min="30" max="200" step="0.1" required>
+                        <input type="number" name="weight" class="form-control" value="<?php echo $user['weight']; ?>" min="50" max="200" step="0.1" title="Minimum weight for blood donation is 50 kg" oninvalid="this.setCustomValidity('Minimum weight for blood donation is 50 kg')" oninput="this.setCustomValidity('')" required>
                     </div>
                 </div>
             </div>

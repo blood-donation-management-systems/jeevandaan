@@ -94,6 +94,28 @@ class Organization extends Controller {
         }
         
         $orgId = $_SESSION['user_id'];
+
+        // --- Server-side validation ---
+
+        // Bug 5 (org): Phone — exactly 10 digits
+        if (!preg_match('/^[0-9]{10}$/', trim($_POST['phone']))) {
+            $this->setFlash('error', 'Phone number must be exactly 10 digits.');
+            $this->redirect('organization/profile');
+            return;
+        }
+
+        // Bug 5: Org ID document is mandatory if not already uploaded
+        $stmt = $this->db->prepare("SELECT organization_id_document FROM organization_personnel WHERE id = ?");
+        $stmt->bind_param("i", $orgId);
+        $stmt->execute();
+        $existing = $stmt->get_result()->fetch_assoc();
+        $hasExistingDoc = !empty($existing['organization_id_document']);
+
+        if (!$hasExistingDoc && (!isset($_FILES['organization_id_document']) || $_FILES['organization_id_document']['error'] !== UPLOAD_ERR_OK)) {
+            $this->setFlash('error', 'Organization ID document is required.');
+            $this->redirect('organization/profile');
+            return;
+        }
         
         // Handle file upload
         $orgIdDoc = null;

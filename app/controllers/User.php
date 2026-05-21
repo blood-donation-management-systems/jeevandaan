@@ -87,6 +87,36 @@ class User extends Controller {
         }
         
         $userId = $_SESSION['user_id'];
+
+        // --- Server-side validation ---
+
+        // Bug 3: Full name — letters, spaces, dots only
+        if (!preg_match('/^[A-Za-z\s\.]+$/', trim($_POST['full_name']))) {
+            $this->setFlash('error', 'Full name can only contain letters, spaces, and dots.');
+            $this->redirect('user/profile');
+            return;
+        }
+
+        // Bug 4: Phone — exactly 10 digits
+        if (!preg_match('/^[0-9]{10}$/', trim($_POST['phone']))) {
+            $this->setFlash('error', 'Phone number must be exactly 10 digits.');
+            $this->redirect('user/profile');
+            return;
+        }
+
+        // Bug 1: Date of birth — must not be a future date
+        if (!empty($_POST['date_of_birth']) && $_POST['date_of_birth'] > date('Y-m-d')) {
+            $this->setFlash('error', 'Date of birth cannot be a future date.');
+            $this->redirect('user/profile');
+            return;
+        }
+
+        // Bug 6: Minimum weight 50 kg
+        if ((float)$_POST['weight'] < 50) {
+            $this->setFlash('error', 'Minimum weight for blood donation is 50 kg.');
+            $this->redirect('user/profile');
+            return;
+        }
         
         $citizenshipFront = $this->handleUpload('citizenship_front', 'id_cards');
         $citizenshipBack = $this->handleUpload('citizenship_back', 'id_cards');
@@ -118,6 +148,15 @@ class User extends Controller {
             'willing_to_donate' => ['value' => isset($_POST['willing_to_donate']) ? 1 : 0, 'type' => 'i'],
             'receive_notifications' => ['value' => isset($_POST['receive_notifications']) ? 1 : 0, 'type' => 'i']
         ];
+
+        // Bug 2: Auto-calculate eligibility based on disqualifying conditions
+        $hasHiv      = isset($_POST['has_hiv']) ? 1 : 0;
+        $hasHepB     = isset($_POST['has_hepatitis_b']) ? 1 : 0;
+        $hasHepC     = isset($_POST['has_hepatitis_c']) ? 1 : 0;
+        $hasDiabetes = isset($_POST['has_diabetes']) ? 1 : 0;
+        $hasHyper    = isset($_POST['has_hypertension']) ? 1 : 0;
+        $isEligible  = ($hasHiv || $hasHepB || $hasHepC || $hasDiabetes || $hasHyper) ? 0 : 1;
+        $fields['is_eligible'] = ['value' => $isEligible, 'type' => 'i'];
         
         foreach ($fields as $field => $data) {
             $updateFields[] = "$field = ?";
