@@ -1,38 +1,5 @@
 <?php require_once APP_ROOT . '/app/views/layouts/header.php'; ?>
 
-<?php
-// Determine eligibility
-$isEligible = true;
-$ineligibilityReasons = [];
-
-if ($user['has_hiv']) {
-    $isEligible = false;
-    $ineligibilityReasons[] = 'HIV/AIDS positive';
-}
-if ($user['has_hepatitis_b']) {
-    $isEligible = false;
-    $ineligibilityReasons[] = 'Hepatitis B positive';
-}
-if ($user['has_hepatitis_c']) {
-    $isEligible = false;
-    $ineligibilityReasons[] = 'Hepatitis C positive';
-}
-if (!empty($user['weight']) && $user['weight'] < 50) {
-    $isEligible = false;
-    $ineligibilityReasons[] = 'Weight below 50 kg (minimum required)';
-}
-if (!empty($user['date_of_birth'])) {
-    $age = (new DateTime($user['date_of_birth']))->diff(new DateTime())->y;
-    if ($age < 18) {
-        $isEligible = false;
-        $ineligibilityReasons[] = 'Age below 18 years';
-    } elseif ($age > 65) {
-        $isEligible = false;
-        $ineligibilityReasons[] = 'Age above 65 years';
-    }
-}
-?>
-
 <div class="admin-dashboard">
     <div class="container">
         <div class="page-header">
@@ -41,25 +8,6 @@ if (!empty($user['date_of_birth'])) {
                 <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
-
-        <!-- Eligibility Alert -->
-        <?php if (!$isEligible): ?>
-            <div class="alert alert-danger" style="font-size:1.1rem;">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong>⚠️ INELIGIBLE DONOR</strong>
-                <p style="margin-top:10px;">This user is <strong>NOT ELIGIBLE</strong> to donate blood due to:</p>
-                <ul style="margin-top:10px;margin-left:20px;">
-                    <?php foreach ($ineligibilityReasons as $reason): ?>
-                        <li><?php echo $reason; ?></li>
-                    <?php endforeach; ?>
-                </ul>
-            </div>
-        <?php else: ?>
-            <div class="alert alert-success">
-                <i class="fas fa-check-circle"></i>
-                <strong>✓ ELIGIBLE DONOR</strong> - This user meets all eligibility criteria
-            </div>
-        <?php endif; ?>
 
         <div class="form-section">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -96,8 +44,8 @@ if (!empty($user['date_of_birth'])) {
                     <label><i class="fas fa-weight"></i> Weight</label>
                     <p>
                         <?php echo $user['weight'] ? $user['weight'] . ' kg' : 'Not provided'; ?>
-                        <?php if ($user['weight'] && $user['weight'] < 50): ?>
-                            <span style="color:var(--danger);"> ⚠️ Below minimum (50 kg)</span>
+                        <?php if ($user['weight'] && $user['weight'] < 45): ?>
+                            <span style="color:var(--danger);"> ⚠️ Below minimum</span>
                         <?php endif; ?>
                     </p>
                 </div>
@@ -131,8 +79,8 @@ if (!empty($user['date_of_birth'])) {
             </div>
         </div>
 
-        <!-- Health Information with Eligibility -->
-        <div class="form-section" style="border-left:4px solid <?php echo $isEligible ? 'var(--success)' : 'var(--danger)'; ?>;">
+        <!-- Health Information -->
+        <div class="form-section" style="border-left:4px solid var(--danger);">
             <h2><i class="fas fa-heartbeat"></i> Health Information</h2>
 
             <div style="background:#fff3cd;padding:15px;border-radius:8px;margin-bottom:20px;">
@@ -161,18 +109,8 @@ if (!empty($user['date_of_birth'])) {
                     <p><?php echo $user['has_hypertension'] ? '<span style="color:var(--warning);font-weight:bold;">✓ YES</span>' : '<span style="color:var(--success);">✗ No</span>'; ?></p>
                 </div>
                 <div class="form-group">
-                    <label><strong>Donation Eligibility</strong></label>
-                    <p style="font-size:1.1rem;">
-                        <?php if ($isEligible): ?>
-                            <span style="background:#d4edda;color:#155724;padding:6px 15px;border-radius:20px;font-weight:bold;">
-                                <i class="fas fa-check-circle"></i> ✓ ELIGIBLE
-                            </span>
-                        <?php else: ?>
-                            <span style="background:#f8d7da;color:#721c24;padding:6px 15px;border-radius:20px;font-weight:bold;">
-                                <i class="fas fa-times-circle"></i> ✗ INELIGIBLE
-                            </span>
-                        <?php endif; ?>
-                    </p>
+                    <label>Eligible</label>
+                    <p><?php echo $user['is_eligible'] ? '<span style="color:var(--success);font-weight:bold;">✓ YES</span>' : '<span style="color:var(--danger);font-weight:bold;">✗ NO</span>'; ?></p>
                 </div>
             </div>
 
@@ -184,7 +122,7 @@ if (!empty($user['date_of_birth'])) {
             <?php endif; ?>
         </div>
 
-        <!-- Documents -->
+        <!-- Documents - FIXED PATH -->
         <div class="form-section">
             <h2><i class="fas fa-id-card"></i> Uploaded Documents</h2>
             <div class="upload-grid">
@@ -193,8 +131,11 @@ if (!empty($user['date_of_birth'])) {
                     <div class="upload-area" style="min-height:200px;">
                         <?php if ($user['citizenship_front']): ?>
                             <a href="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_front']; ?>" target="_blank">
-                                <img src="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_front']; ?>" alt="Front" style="max-width:100%;max-height:250px;cursor:pointer;">
+                                <img src="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_front']; ?>" 
+                                     alt="Front" 
+                                     style="max-width:100%;max-height:250px;cursor:pointer;">
                             </a>
+                            <small style="display:block;margin-top:10px;">Click to view full size</small>
                         <?php else: ?>
                             <i class="fas fa-times-circle" style="color:var(--danger);font-size:2rem;"></i>
                             <p style="color:var(--danger);">Not uploaded</p>
@@ -206,8 +147,11 @@ if (!empty($user['date_of_birth'])) {
                     <div class="upload-area" style="min-height:200px;">
                         <?php if ($user['citizenship_back']): ?>
                             <a href="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_back']; ?>" target="_blank">
-                                <img src="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_back']; ?>" alt="Back" style="max-width:100%;max-height:250px;cursor:pointer;">
+                                <img src="<?php echo UPLOAD_URL; ?>id_cards/<?php echo $user['citizenship_back']; ?>" 
+                                     alt="Back" 
+                                     style="max-width:100%;max-height:250px;cursor:pointer;">
                             </a>
+                            <small style="display:block;margin-top:10px;">Click to view full size</small>
                         <?php else: ?>
                             <i class="fas fa-times-circle" style="color:var(--danger);font-size:2rem;"></i>
                             <p style="color:var(--danger);">Not uploaded</p>
@@ -219,11 +163,14 @@ if (!empty($user['date_of_birth'])) {
                     <div class="upload-area" style="min-height:200px;">
                         <?php if ($user['donation_certificate']): ?>
                             <a href="<?php echo UPLOAD_URL; ?>certificates/<?php echo $user['donation_certificate']; ?>" target="_blank">
-                                <img src="<?php echo UPLOAD_URL; ?>certificates/<?php echo $user['donation_certificate']; ?>" alt="Certificate" style="max-width:100%;max-height:250px;cursor:pointer;">
+                                <img src="<?php echo UPLOAD_URL; ?>certificates/<?php echo $user['donation_certificate']; ?>" 
+                                     alt="Certificate" 
+                                     style="max-width:100%;max-height:250px;cursor:pointer;">
                             </a>
+                            <small style="display:block;margin-top:10px;">Click to view full size</small>
                         <?php else: ?>
-                            <i class="fas fa-times-circle" style="color:var(--danger);font-size:2rem;"></i>
-                            <p style="color:var(--danger);">Not uploaded</p>
+                            <i class="fas fa-info-circle" style="color:var(--secondary);font-size:2rem;"></i>
+                            <p>Not uploaded (Optional)</p>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -233,14 +180,6 @@ if (!empty($user['date_of_birth'])) {
         <!-- Actions -->
         <div class="form-section">
             <h2><i class="fas fa-gavel"></i> Verification Action</h2>
-
-            <?php if (!$isEligible): ?>
-                <div class="alert alert-warning">
-                    <i class="fas fa-info-circle"></i>
-                    <strong>Note:</strong> This user is marked as <strong>INELIGIBLE</strong> for blood donation. 
-                    You may still verify their identity for record-keeping purposes.
-                </div>
-            <?php endif; ?>
 
             <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
                 <a href="<?php echo APP_URL; ?>/admin/approve-user/<?php echo $user['id']; ?>" 
@@ -254,7 +193,11 @@ if (!empty($user['date_of_birth'])) {
                       style="display:flex;gap:10px;flex:1;flex-direction:column;"
                       onsubmit="return confirm('Reject this user?')">
                     <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                    <textarea name="reason" class="form-control" rows="3" placeholder="Rejection reason..." required></textarea>
+                    <textarea name="reason" 
+                              class="form-control" 
+                              rows="3"
+                              placeholder="Rejection reason (sent to user)..." 
+                              required></textarea>
                     <button type="submit" class="btn btn-danger btn-lg">
                         <i class="fas fa-times"></i> Reject with Reason
                     </button>

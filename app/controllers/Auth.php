@@ -285,13 +285,6 @@ class Auth extends Controller {
         $stmt->execute();
         $user = $stmt->get_result()->fetch_assoc();
         
-        // NEW USER - Show terms first
-        if (!$user) {
-            $_SESSION['pending_google_user'] = $info;
-            $_SESSION['pending_user_type'] = 'user';
-            $this->redirect('auth/google-terms');
-        }
-        
         if (!$user) {
             $picture = $info['picture'] ?? null;
             $stmt = $this->db->prepare("INSERT INTO users (google_id, email, full_name, profile_picture, created_at) VALUES (?, ?, ?, ?, NOW())");
@@ -323,13 +316,6 @@ class Auth extends Controller {
         $stmt->bind_param("ss", $info['id'], $info['email']);
         $stmt->execute();
         $org = $stmt->get_result()->fetch_assoc();
-        
-        // NEW ORG - Show terms first
-        if (!$org) {
-            $_SESSION['pending_google_user'] = $info;
-            $_SESSION['pending_user_type'] = 'organization';
-            $this->redirect('auth/google-terms');
-        }
         
         if (!$org) {
             $picture = $info['picture'] ?? null;
@@ -596,72 +582,6 @@ class Auth extends Controller {
             'success' => $success,
             'type' => $type
         ]);
-    }
-
-
-    
-    // ==========================================
-    // GOOGLE TERMS ACCEPTANCE
-    // ==========================================
-    public function google_terms() {
-        if (!isset($_SESSION['pending_google_user'])) {
-            $this->redirect('auth/login');
-        }
-        
-        $this->view('auth/google_terms', [
-            'title' => 'Accept Terms',
-            'user_name' => $_SESSION['pending_google_user']['name'],
-            'user_type' => $_SESSION['pending_user_type']
-        ]);
-    }
-    
-    public function accept_google_terms() {
-        if (!isset($_SESSION['pending_google_user']) || !isset($_POST['agree_terms'])) {
-            $this->redirect('auth/login');
-        }
-        
-        $info = $_SESSION['pending_google_user'];
-        $type = $_SESSION['pending_user_type'];
-        
-        if ($type === 'user') {
-            $picture = $info['picture'] ?? null;
-            $stmt = $this->db->prepare("INSERT INTO users (google_id, email, full_name, profile_picture, created_at) VALUES (?, ?, ?, ?, NOW())");
-            $stmt->bind_param("ssss", $info['id'], $info['email'], $info['name'], $picture);
-            $stmt->execute();
-            $userId = $this->db->insert_id;
-            
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
-            $stmt->bind_param("i", $userId);
-            $stmt->execute();
-            $user = $stmt->get_result()->fetch_assoc();
-            
-            $this->setUserSession($user);
-            unset($_SESSION['pending_google_user'], $_SESSION['pending_user_type']);
-            $this->setFlash('success', 'Welcome to JeevanDaan, ' . $user['full_name'] . '!');
-            $this->redirect('user/dashboard');
-        } else {
-            $picture = $info['picture'] ?? null;
-            $stmt = $this->db->prepare("INSERT INTO organization_personnel (google_id, email, full_name, profile_picture, created_at) VALUES (?, ?, ?, ?, NOW())");
-            $stmt->bind_param("ssss", $info['id'], $info['email'], $info['name'], $picture);
-            $stmt->execute();
-            $orgId = $this->db->insert_id;
-            
-            $stmt = $this->db->prepare("SELECT * FROM organization_personnel WHERE id = ?");
-            $stmt->bind_param("i", $orgId);
-            $stmt->execute();
-            $org = $stmt->get_result()->fetch_assoc();
-            
-            $this->setOrgSession($org);
-            unset($_SESSION['pending_google_user'], $_SESSION['pending_user_type']);
-            $this->setFlash('warning', 'Welcome! Please complete your profile and wait for admin verification.');
-            $this->redirect('organization/dashboard');
-        }
-    }
-    
-    public function decline_google_terms() {
-        unset($_SESSION['pending_google_user'], $_SESSION['pending_user_type']);
-        $this->setFlash('warning', 'You must accept the Terms and Conditions to use JeevanDaan.');
-        $this->redirect('auth/login');
     }
 
 }

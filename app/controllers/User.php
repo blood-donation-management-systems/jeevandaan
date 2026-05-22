@@ -150,48 +150,7 @@ class User extends Controller {
         
         if ($stmt->execute()) {
             $_SESSION['user_name'] = trim($_POST['full_name']);
-            
-            // Check if user has rare blood group and profile is complete
-            $bloodGroup = $_POST['blood_group'] ?? '';
-            $rareBloodGroups = ['AB-', 'B-', 'A-', 'O-'];
-            
-            // Check if profile is now complete (has all required fields)
-            $profileComplete = !empty($_POST['full_name']) && 
-                              !empty($_POST['phone']) && 
-                              !empty($_POST['date_of_birth']) && 
-                              !empty($_POST['blood_group']) && 
-                              !empty($_POST['weight']) && 
-                              !empty($_POST['province']) && 
-                              !empty($_POST['district']) && 
-                              !empty($_POST['municipality']);
-            
-            if (in_array($bloodGroup, $rareBloodGroups) && $profileComplete) {
-                // Check if notification already sent
-                $checkStmt = $this->db->prepare("SELECT id FROM notifications WHERE recipient_id = ? AND recipient_type = 'user' AND type = 'rare_blood' LIMIT 1");
-                $checkStmt->bind_param("i", $userId);
-                $checkStmt->execute();
-                $existing = $checkStmt->get_result()->fetch_assoc();
-                
-                if (!$existing) {
-                    // Send rare blood notification
-                    $rareMessage = "🎉 Thank you for registering! Your blood group $bloodGroup is RARE and highly valuable. We will contact you when patients urgently need your blood type. You are a lifesaver! ❤️";
-                    $notifStmt = $this->db->prepare("INSERT INTO notifications (recipient_id, recipient_type, type, title, message, link) VALUES (?, 'user', 'rare_blood', 'You Have Rare Blood! 🩸', ?, '/user/dashboard')");
-                    $notifStmt->bind_param("is", $userId, $rareMessage);
-                    $notifStmt->execute();
-                    
-                    // Also notify admin
-                    $adminMsg = "New rare blood donor registered: " . $_POST['full_name'] . " (Blood Group: $bloodGroup)";
-                    $adminStmt = $this->db->prepare("INSERT INTO notifications (recipient_id, recipient_type, type, title, message, link) VALUES (1, 'admin', 'rare_donor', 'New Rare Blood Donor!', ?, '/admin/users')");
-                    $adminStmt->bind_param("s", $adminMsg);
-                    $adminStmt->execute();
-                    
-                    $this->setFlash('success', 'Profile updated! 🎉 Your blood group is rare - we sent you a special notification.');
-                } else {
-                    $this->setFlash('success', 'Profile updated successfully!');
-                }
-            } else {
-                $this->setFlash('success', 'Profile updated successfully!');
-            }
+            $this->setFlash('success', 'Profile updated successfully!');
         } else {
             $this->setFlash('error', 'Failed to update profile');
         }
