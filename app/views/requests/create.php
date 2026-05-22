@@ -40,7 +40,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Units Required *</label>
+                        <label>Units Required * <small style="color:var(--secondary);">(1 unit = 450-500 ml)</small></label>
                         <input type="number" name="units_required" class="form-control" value="1" min="1" max="10" required>
                     </div>
                 </div>
