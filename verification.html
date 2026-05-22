@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LifeLink | Verification</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="auth-wrapper">
+    <div class="auth-card-container" style="max-width:650px;padding:40px;display:block;">
+        <div style="text-align:center;margin-bottom:30px;">
+            <h2 class="logo-text" style="font-size:1.8rem;margin:0 0 10px;">Identity Verification</h2>
+            <p style="color:var(--text-grey);font-size:.9rem;">Upload your Citizenship card and optional donation history.</p>
+        </div>
+        <form onsubmit="handleVerification(event)">
+            <div class="input-group">
+                <label>Citizenship Card (Front) <span style="color:var(--primary-red)">*</span></label>
+                <div class="drop-zone" onclick="document.getElementById('fileFront').click()">
+                    <input type="file" id="fileFront" name="front" data-preview="prevFront" data-status="statFront" accept="image/*" hidden required>
+                    <div class="upload-placeholder"><div style="font-size:2rem;color:var(--primary-red);">↑</div><p style="margin:0;font-size:.85rem;color:#888;">Click to browse file</p></div>
+                    <img id="prevFront" src="#" style="display:none;width:100%;border-radius:10px;">
+                </div>
+                <div class="upload-status" id="statFront">No file selected</div>
+            </div>
+            <div class="input-group" style="margin-top:20px;">
+                <label>Citizenship Card (Back) <span style="color:var(--primary-red)">*</span></label>
+                <div class="drop-zone" onclick="document.getElementById('fileBack').click()">
+                    <input type="file" id="fileBack" name="back" data-preview="prevBack" data-status="statBack" accept="image/*" hidden required>
+                    <div class="upload-placeholder"><div style="font-size:2rem;color:var(--primary-red);">↑</div><p style="margin:0;font-size:.85rem;color:#888;">Click to browse file</p></div>
+                    <img id="prevBack" src="#" style="display:none;width:100%;border-radius:10px;">
+                </div>
+                <div class="upload-status" id="statBack">No file selected</div>
+            </div>
+            <div class="input-group" style="margin-top:20px;padding-top:20px;border-top:1px solid #eee;">
+                <label>Donation Certificate (Optional)</label>
+                <div class="drop-zone" onclick="document.getElementById('fileCert').click()">
+                    <input type="file" id="fileCert" name="cert" data-preview="prevCert" data-status="statCert" accept="image/*,application/pdf" hidden>
+                    <div class="upload-placeholder"><div style="font-size:2rem;color:var(--primary-red);">↑</div><p style="margin:0;font-size:.85rem;color:#888;">Upload Image or PDF</p></div>
+                    <img id="prevCert" src="#" style="display:none;width:100%;border-radius:10px;">
+                </div>
+                <div class="upload-status" id="statCert">Supported: JPG, PNG, PDF</div>
+            </div>
+            <button type="submit" class="btn-filled-full" style="margin-top:30px;">Submit For Verification</button>
+        </form>
+    </div>
+
+    <div class="modal-overlay" id="successModal" style="display:none;">
+        <div class="modal-card">
+            <div class="icon-container-red">✅</div>
+            <h2 style="font-weight:800;margin-bottom:10px;">Submission Successful</h2>
+            <p style="color:var(--text-grey);font-size:.95rem;line-height:1.6;margin-bottom:30px;">Documents submitted! Our team will verify your identity within 24 hours.</p>
+            <button class="btn-filled-full" onclick="closeModalAndRedirect()">Continue to Dashboard</button>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

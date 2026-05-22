@@ -1,0 +1,20 @@
+Options -Indexes
+
+# We REMOVED the "Require all denied" for setup_db.php
+
+# so that you can actually run it to set up your database.
+
+# Security headers
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# To prevent PHP execution in the uploads folder,
+
+# you should put a separate .htaccess file INSIDE the uploads folder.
+
+# The <Directory> tag is NOT allowed here, so I have removed it.

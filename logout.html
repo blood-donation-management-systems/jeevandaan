@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Out – Life Link</title>
+    <link rel="stylesheet" href="logout.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="overlay">
+        <div class="modal">
+            <div class="icon-wrap">
+                <svg width="36" height="36" fill="none" stroke="#C0392B" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </div>
+            <p class="message">Are you sure you want to log out?</p>
+            <button class="btn-logout" onclick="confirmLogout()">Yes, Log me out</button>
+            <button class="btn-cancel" onclick="cancelLogout()">Cancel</button>
+        </div>
+    </div>
+    <script>
+        function confirmLogout() {
+            // Destroy PHP session server-side then redirect
+            fetch('php/logout.php').finally(() => {
+                window.location.href = 'index.html';
+            });
+        }
+        function cancelLogout() { window.history.back(); }
+    </script>
+</body>
+</html>

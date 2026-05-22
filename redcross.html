@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Link – Red Cross Dashboard</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:wght@500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="redcross.css" />
+</head>
+
+<body>
+
+  <aside class="sidebar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg class="blood-drop" viewBox="0 0 24 24">
+          <path d="M12 2C12 2 5 9.5 5 14a7 7 0 0 0 14 0C19 9.5 12 2 12 2z" />
+        </svg>
+        <div class="plus-badge">+</div>
+      </div>
+      life link
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" onclick="showPage('dashboard',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </svg>
+        Dashboard
+      </button>
+      <button class="nav-item" onclick="showPage('appointments',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <rect x="3" y="4" width="18" height="18" rx="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        Appointments
+      </button>
+      <button class="nav-item" onclick="showPage('bloodtesting',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M8 3h8v10a4 4 0 0 1-8 0V3z" />
+          <line x1="12" y1="3" x2="12" y2="13" />
+        </svg>
+        Blood Testing
+      </button>
+      <button class="nav-item" onclick="showPage('inventory',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <rect x="3" y="3" width="18" height="18" rx="2" />
+          <line x1="3" y1="9" x2="21" y2="9" />
+          <line x1="3" y1="15" x2="21" y2="15" />
+          <line x1="9" y1="9" x2="9" y2="21" />
+        </svg>
+        Inventory
+      </button>
+      <button class="nav-item" onclick="showPage('bloodrequest',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M12 21C12 21 5 14 5 9C5 5.686 8.134 3 12 3C15.866 3 19 5.686 19 9C19 14 12 21 12 21Z" />
+          <circle cx="12" cy="9" r="2" fill="none" />
+        </svg>
+        Blood Request
+      </button>
+      <button class="nav-item" onclick="showPage('rareblood',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="9" cy="7" r="4" />
+          <path d="M3 21v-2a4 4 0 0 1 4-4h4" />
+          <circle cx="17" cy="17" r="4" />
+          <path d="M17 15v2l1 1" />
+        </svg>
+        Rare Blood Registry
+      </button>
+      <button class="nav-item" onclick="showPage('expire',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+          <line x1="12" y1="9" x2="12" y2="13" />
+          <line x1="12" y1="17" x2="12.01" y2="17" />
+        </svg>
+        Expire Monitoring
+      </button>
+      <button class="nav-item" onclick="showPage('donors',this)">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <circle cx="12" cy="8" r="4" />
+          <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+        </svg>
+        Donor Records
+      </button>
+    </nav>
+    <div class="sidebar-logout">
+      <a class="logout-btn" href="logout.html">
+        <svg viewBox="0 0 24 24" stroke-width="1.8">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- DASHBOARD -->
+    <section class="page active" id="page-dashboard">
+      <h1 class="page-title">Dashboard Overview</h1>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg></div>
+          <div class="stat-value">122</div>
+          <div class="stat-label">Total Donors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg></div>
+          <div class="stat-value">200</div>
+          <div class="stat-label">All Blood Units</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8">
+              <path d="M12 21C12 21 5 14 5 9C5 5.686 8.134 3 12 3C15.866 3 19 5.686 19 9C19 14 12 21 12 21Z" />
+            </svg></div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">Total Requests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon"><svg viewBox="0 0 24 24" stroke-width="1.8">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg></div>
+          <div class="stat-value">2</div>
+          <div class="stat-label">Expiring Soon</div>
+        </div>
+      </div>
+      <div class="dashboard-grid">
+        <div class="card">
+          <h2>Blood Inventory By Type</h2>
+          <div class="bar-list">
+            <div class="bar-row"><span class="blood-type">A+</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:85%"></div>
+              </div>
+              <span class="units">17 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">B+</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:35%"></div>
+              </div>
+              <span class="units">7 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">A-</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:40%"></div>
+              </div>
+              <span class="units">8 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">AB+</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:20%"></div>
+              </div>
+              <span class="units">10 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">O+</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:50%"></div>
+              </div>
+              <span class="units">10 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">O-</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:50%"></div>
+              </div>
+              <span class="units">10 Units</span>
+            </div>
+            <div class="bar-row"><span class="blood-type">AB-</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:30%"></div>
+              </div>
+              <span class="units">6 Units</span>
+            </div>
+            <div class="bar-row">
+              <span class="blood-type" style="font-size:9px;width:44px">Rh-null</span>
+              <div class="bar-track">
+                <div class="bar-fill" style="width:5%"></div>
+              </div>
+              <span class="units">1 Unit</span>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Rare Blood Alert</h2>
+          <div class="alert-item">
+            <div class="alert-type">O- Urgent Needed</div>
+            <div class="alert-names">John Doe</div>
+            <div class="alert-names">Chakrapath</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPOINTMENTS -->
+    <section class="page" id="page-appointments">
+      <h1 class="page-title">Appointments</h1>
+      <div class="table-card">
+        <table id="tbl-appointments">
+          <thead>
+            <tr>
+              <th>Donor Name</th>
+              <th>Blood Group</th>
+              <th>Requested Date</th>
+              <th>Last Donation</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="a1">
+              <td>John Doe</td>
+              <td>B+</td>
+              <td>2026-04-05</td>
+              <td>2025-12-01</td>
+              <td><span class="badge badge-green">Scheduled</span></td>
+              <td>
+                <button class="action-btn" onclick="openEdit('appointments','a1',this)"><svg viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Edit</button>
+                <button class="action-btn" onclick="openDelete('a1','tbl-appointments')"><svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  </svg> Delete</button>
+              </td>
+            </tr>
+            <tr data-id="a2">
+              <td>Jane Smith</td>
+              <td>O+</td>
+              <td>2026-04-05</td>
+              <td>2025-12-01</td>
+              <td><span class="badge badge-red">Pending</span></td>
+              <td>
+                <button class="action-btn" onclick="openEdit('appointments','a2',this)"><svg viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Edit</button>
+                <button class="action-btn" onclick="openDelete('a2','tbl-appointments')"><svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  </svg> Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BLOOD TESTING -->
+    <section class="page" id="page-bloodtesting">
+      <h1 class="page-title">Blood Testing</h1>
+      <div class="table-card">
+        <table id="tbl-bloodtesting">
+          <thead>
+            <tr>
+              <th>Donor Name</th>
+              <th>Claimed</th>
+              <th>Tested</th>
+              <th>Disease Screening</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="bt1">
+              <td><strong style="font-weight:500">John Doe</strong></td>
+              <td>A+</td>
+              <td>A+</td>
+              <td><button class="disease-expand-btn" onclick="toggleDisease('bt1')"><svg viewBox="0 0 24 24"
+                    style="width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 8v4M12 16h.01" />
+                  </svg> View Disease Panel</button></td>
+              <td>
+                <button class="action-btn" onclick="testingAction('bt1','Accepted')"><svg viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg> Accept</button>
+                <button class="action-btn" onclick="testingAction('bt1','Rejected')"><svg viewBox="0 0 24 24">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg> Reject</button>
+              </td>
+            </tr>
+            <tr class="disease-drawer" id="drawer-bt1">
+              <td colspan="5">
+                <div class="disease-panel">
+                  <div class="dpanel">
+                    <div class="dpanel-header"><svg style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2"
+                        viewBox="0 0 24 24">
+                        <path d="M12 2C12 2 5 8.5 5 14a7 7 0 0 0 14 0C19 8.5 12 2 12 2z" />
+                      </svg>Hemoglobin Level</div>
+                    <div class="dpanel-body">
+                      <div class="disease-row">
+                        <div class="disease-row-label">Hemoglobin<span>Normal: 13.5–17.5 g/dL (M), 12–15.5 (F)</span>
+                        </div>
+                        <div class="disease-input-wrap"><input type="number" step="0.1" value="14.5" id="hb-bt1"
+                            onchange="updateHbBadge('bt1')" /><span
+                            style="font-size:11px;color:var(--text-muted)">g/dL</span><span
+                            class="disease-val dv-normal" id="hb-badge-bt1">Normal</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dpanel">
+                    <div class="dpanel-header"><svg style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2"
+                        viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v4M12 16h.01" />
+                      </svg>Infectious Diseases</div>
+                    <div class="dpanel-body">
+                      <div class="disease-row">
+                        <div class="disease-row-label">HIV</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Hepatitis B</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Hepatitis C</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Syphilis</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Malaria</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Corona (COVID-19)</div><select class="disease-val"
+                          style="background:#d1fae5;color:#065f46;border:none;font-size:12px;padding:3px 8px;border-radius:99px;font-weight:600"
+                          onchange="updateSelectColor(this)">
+                          <option value="neg">Negative</option>
+                          <option value="pos">Positive</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dpanel">
+                    <div class="dpanel-header"><svg style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2"
+                        viewBox="0 0 24 24">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                      </svg>Vital Signs</div>
+                    <div class="dpanel-body">
+                      <div class="disease-row">
+                        <div class="disease-row-label">Blood Pressure<span>Normal: 90/60–120/80 mmHg</span></div>
+                        <div class="disease-input-wrap"><input type="text" value="118/76" style="width:76px" /><span
+                            style="font-size:11px;color:var(--text-muted)">mmHg</span></div>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Pulse Rate<span>Normal: 60–100 bpm</span></div>
+                        <div class="disease-input-wrap"><input type="number" value="78" style="width:60px" /><span
+                            style="font-size:11px;color:var(--text-muted)">bpm</span></div>
+                      </div>
+                      <div class="disease-row">
+                        <div class="disease-row-label">Temperature<span>Normal: 36.1–37.2 °C</span></div>
+                        <div class="disease-input-wrap"><input type="number" step="0.1" value="36.8"
+                            style="width:60px" /><span style="font-size:11px;color:var(--text-muted)">°C</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="dpanel">
+                    <div class="dpanel-header"><svg style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2"
+                        viewBox="0 0 24 24">
+                        <path d="M12 22C12 22 4 17 4 10a8 8 0 0 1 16 0c0 7-8 12-8 12z" />
+                      </svg>Weight &amp; General Health</div>
+                    <div class="dpanel-body">
+                      <div class="disease-row">
+                        <div class="disease-row-label">Weight<span>Minimum 50 kg to donate</span></div>
+                        <div class="disease-input-wrap"><input type="number" value="68" style="width:60px" /><span
+                            style="font-size:11px;color:var(--text-muted)">kg</span></div>
+                      </div>
+                      <div class="disease-row" style="align-items:flex-start;flex-direction:column;gap:6px">
+                        <div class="disease-row-label" style="font-size:12px;font-weight:600;color:var(--crimson)">Donor
+                          Health Declaration<span style="font-weight:400;color:var(--text-muted)">Recent illness /
+                            surgery / tattoos / risky history</span></div><textarea class="gh-textarea"
+                          rows="3">No recent illness. Tattoo done 8 months ago. No recent surgery.</textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- INVENTORY -->
+    <section class="page" id="page-inventory">
+      <h1 class="page-title">Inventory</h1>
+      <div class="table-card">
+        <table id="tbl-inventory">
+          <thead>
+            <tr>
+              <th>Blood Group</th>
+              <th>Units Available</th>
+              <th>Storage Date</th>
+              <th>Expire Date</th>
+              <th>Can Donate To</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="inv1">
+              <td>A+</td>
+              <td>45</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">A+</span><span class="compat-tag">AB+</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv1')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv1',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv2">
+              <td>A-</td>
+              <td>20</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">A+</span><span class="compat-tag">A-</span><span
+                    class="compat-tag">AB+</span><span class="compat-tag">AB-</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv2')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv2',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv3">
+              <td>B+</td>
+              <td>32</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">B+</span><span class="compat-tag">AB+</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv3')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv3',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv4">
+              <td>B-</td>
+              <td>60</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">B+</span><span class="compat-tag">B-</span><span
+                    class="compat-tag">AB+</span><span class="compat-tag">AB-</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv4')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv4',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv5">
+              <td>O+</td>
+              <td>28</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">A+</span><span class="compat-tag">B+</span><span
+                    class="compat-tag">O+</span><span class="compat-tag">AB+</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv5')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv5',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv6">
+              <td>O-</td>
+              <td>15</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">A+</span><span class="compat-tag">A-</span><span
+                    class="compat-tag">B+</span><span class="compat-tag">B-</span><span
+                    class="compat-tag">O+</span><span class="compat-tag">O-</span><span
+                    class="compat-tag">AB+</span><span class="compat-tag">AB-</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv6')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv6',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv7">
+              <td>AB+</td>
+              <td>12</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">AB+</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv7')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv7',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv8">
+              <td>AB-</td>
+              <td>8</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag">AB+</span><span class="compat-tag">AB-</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv8')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv8',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+            <tr data-id="inv9">
+              <td style="font-weight:600;color:var(--crimson)">Rh-null <span
+                  style="font-size:10px;background:#fef3c7;color:#92400e;padding:1px 6px;border-radius:99px;font-weight:600;margin-left:4px;border:1px solid #f59e0b">Golden</span>
+              </td>
+              <td>1</td>
+              <td>2026-04-05</td>
+              <td>2026-12-01</td>
+              <td>
+                <div class="compat-tags"><span class="compat-tag"
+                    style="background:#fef9c3;color:#713f12;border-color:#fde047">All Types</span></div>
+              </td>
+              <td><button class="action-btn" onclick="openAdd('inv9')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg> Add</button><button class="action-btn" onclick="openEdit('inventory','inv9',this)"><svg
+                    viewBox="0 0 24 24">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg> Update</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- BLOOD REQUEST -->
+    <section class="page" id="page-bloodrequest">
+      <h1 class="page-title">Blood Request</h1>
+      <div class="table-card">
+        <table id="tbl-bloodrequest">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Blood Group</th>
+              <th>Units</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="br1">
+              <td>John Doe</td>
+              <td>B+</td>
+              <td>2</td>
+              <td><span class="badge badge-yellow">Pending</span></td>
+              <td>
+                <button class="action-btn" onclick="requestAction('br1','Approved')"><svg viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg> Approve</button>
+                <button class="action-btn" onclick="openAssign('br1')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                  </svg> Assign</button>
+              </td>
+            </tr>
+            <tr data-id="br2">
+              <td>Jane Smith</td>
+              <td>Rh-null</td>
+              <td>1</td>
+              <td><span class="badge badge-red">Urgent</span></td>
+              <td>
+                <button class="action-btn" onclick="requestAction('br2','Approved')"><svg viewBox="0 0 24 24">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg> Approve</button>
+                <button class="action-btn" onclick="openAssign('br2')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="8" r="4" />
+                    <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                  </svg> Assign</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RARE BLOOD REGISTRY -->
+    <section class="page" id="page-rareblood">
+      <h1 class="page-title">Rare Blood Registry</h1>
+      <div class="table-card">
+        <table id="tbl-rareblood">
+          <thead>
+            <tr>
+              <th>Patient Name</th>
+              <th>Blood Group</th>
+              <th>Location</th>
+              <th>Contact</th>
+              <th>Availability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="rb1">
+              <td>John Doe</td>
+              <td>AB-</td>
+              <td>Chakrapath</td>
+              <td>977 97654987</td>
+              <td><span class="badge badge-green">Available</span></td>
+            </tr>
+            <tr data-id="rb2">
+              <td>Jane Smith</td>
+              <td>O-</td>
+              <td>Chakrapath</td>
+              <td>977 97654987</td>
+              <td><span class="badge badge-green">Available</span></td>
+            </tr>
+            <tr data-id="rb3">
+              <td>Raj Kumar</td>
+              <td style="font-weight:600;color:var(--crimson)">Rh-null</td>
+              <td>Lalitpur</td>
+              <td>977 98012345</td>
+              <td><span class="badge badge-yellow">Rare — On Call</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- EXPIRE MONITORING -->
+    <section class="page" id="page-expire">
+      <h1 class="page-title">Blood Expiry Monitoring</h1>
+      <div class="table-card">
+        <table id="tbl-expire">
+          <thead>
+            <tr>
+              <th>Blood Group</th>
+              <th>Units</th>
+              <th>Expire Date</th>
+              <th>Days Left</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="ex1">
+              <td>A+</td>
+              <td>3</td>
+              <td>2026-04-08</td>
+              <td><span class="days-left-warning">6 Days</span></td>
+              <td><button class="action-btn" onclick="removeExpiry('ex1','tbl-expire')"><svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  </svg> Remove Expiry</button></td>
+            </tr>
+            <tr data-id="ex2">
+              <td>O-</td>
+              <td>5</td>
+              <td>2026-04-15</td>
+              <td><span class="days-left-warning">13 Days</span></td>
+              <td><button class="action-btn" onclick="removeExpiry('ex2','tbl-expire')"><svg viewBox="0 0 24 24">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  </svg> Remove Expiry</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DONOR RECORDS -->
+    <section class="page" id="page-donors">
+      <h1 class="page-title">Donor Records</h1>
+      <div class="table-card">
+        <table id="tbl-donors">
+          <thead>
+            <tr>
+              <th>Donor Name</th>
+              <th>Blood Group</th>
+              <th>Total Donation</th>
+              <th>Last Donation</th>
+              <th>Eligible</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="dn1">
+              <td>John Doe</td>
+              <td>A-</td>
+              <td>3</td>
+              <td>2026-04-08</td>
+              <td><span class="badge badge-green">Eligible</span></td>
+              <td><button class="action-btn" onclick="viewHistory('dn1')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <polyline points="12 7 12 12 15 15" />
+                  </svg> View History</button></td>
+            </tr>
+            <tr data-id="dn2">
+              <td>Jane Smith</td>
+              <td>A-</td>
+              <td>3</td>
+              <td>2026-04-08</td>
+              <td><span class="badge badge-red">Not Eligible</span></td>
+              <td><button class="action-btn" onclick="viewHistory('dn2')"><svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="9" />
+                    <polyline points="12 7 12 12 15 15" />
+                  </svg> View History</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- EDIT MODAL -->
+  <div class="modal-overlay" id="edit-modal">
+    <div class="modal">
+      <div class="modal-top">
+        <div class="modal-icon-wrap edit"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+          </svg></div>
+        <div class="modal-title-block">
+          <div class="modal-title" id="edit-modal-title">Edit Record</div>
+          <div class="modal-subtitle">Update the details below</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('edit-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="edit-modal-fields"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="foot-btn foot-cancel" onclick="closeModal('edit-modal')">Cancel</button>
+        <button class="foot-btn foot-save" onclick="saveEdit()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE MODAL -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal modal-sm">
+      <div class="modal-top" style="border-bottom:none;padding-bottom:0">
+        <div style="flex:1"></div>
+        <button class="modal-close" onclick="closeModal('delete-modal')">✕</button>
+      </div>
+      <div class="confirm-body">
+        <div class="confirm-ring"><svg viewBox="0 0 24 24">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+          </svg></div>
+        <div class="confirm-h">Delete this record?</div>
+        <div class="confirm-p">This action is permanent and cannot be undone.</div>
+      </div>
+      <div class="confirm-footer">
+        <button class="foot-btn foot-cancel" onclick="closeModal('delete-modal')">Cancel</button>
+        <button class="foot-btn foot-danger" onclick="confirmDelete()">Yes, Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD UNITS MODAL -->
+  <div class="modal-overlay" id="add-modal">
+    <div class="modal modal-sm">
+      <div class="modal-top">
+        <div class="modal-icon-wrap add"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <line x1="12" y1="8" x2="12" y2="16" />
+            <line x1="8" y1="12" x2="16" y2="12" />
+          </svg></div>
+        <div class="modal-title-block">
+          <div class="modal-title">Add Blood Units</div>
+          <div class="modal-subtitle">Increase inventory stock</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('add-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Units to Add</label>
+          <div class="units-wrap">
+            <button class="units-btn" onclick="adjUnits(-1)">−</button>
+            <input class="units-val" id="add-units-input" type="number" min="1" value="1" />
+            <button class="units-btn" onclick="adjUnits(1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="foot-btn foot-cancel" onclick="closeModal('add-modal')">Cancel</button>
+        <button class="foot-btn foot-add" onclick="confirmAdd()">Add Units</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ASSIGN MODAL -->
+  <div class="modal-overlay" id="assign-modal">
+    <div class="modal modal-sm">
+      <div class="modal-top">
+        <div class="modal-icon-wrap assign"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+          </svg></div>
+        <div class="modal-title-block">
+          <div class="modal-title">Assign Donor</div>
+          <div class="modal-subtitle">Link a donor to this request</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('assign-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group"><label class="form-label">Donor Name</label><input type="text" class="form-input"
+            id="assign-donor-input" placeholder="e.g. John Doe" /></div>
+        <div class="form-group"><label class="form-label">Notes (optional)</label><input type="text" class="form-input"
+            id="assign-notes-input" placeholder="Any additional notes…" /></div>
+      </div>
+      <div class="modal-footer">
+        <button class="foot-btn foot-cancel" onclick="closeModal('assign-modal')">Cancel</button>
+        <button class="foot-btn foot-assign" onclick="confirmAssign()">Assign Donor</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY MODAL -->
+  <div class="modal-overlay" id="history-modal">
+    <div class="modal modal-sm">
+      <div class="modal-top">
+        <div class="modal-icon-wrap history"><svg fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="9" />
+            <polyline points="12 7 12 12 15 15" />
+          </svg></div>
+        <div class="modal-title-block">
+          <div class="modal-title" id="history-modal-title">Donation History</div>
+          <div class="modal-subtitle">All recorded donations</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('history-modal')">✕</button>
+      </div>
+      <div class="modal-body">
+        <div id="history-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="foot-btn foot-cancel" onclick="closeModal('history-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <!-- Scripts: auth guard runs first, then dashboard logic -->
+  <script src="js/redcross_auth_inject.js"></script>
+  <script src="redcross.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LifeLink | Sign In</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="auth-wrapper">
+    <div class="auth-card-container">
+        <div class="auth-visual-side">
+            <img src="images/logo.png" alt="Login" onerror="this.style.display='none'">
+        </div>
+        <div class="auth-form-side">
+            <h2 class="logo-text" style="margin-top:0;">Life Link</h2>
+            <div style="display:flex;gap:10px;margin:20px 0 30px;">
+                <button class="btn-filled-small" style="flex:1;">Sign In</button>
+                <button class="btn-outline-small" style="flex:1;" onclick="location.href='signup.html'">Sign Up</button>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="text" name="email" placeholder="example@mail.com" required>
+                </div>
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-filled-full">Sign In</button>
+                <a href="forgot-password.html"
+                    style="display:block;text-align:center;margin-top:15px;color:var(--primary-red);text-decoration:none;font-size:.85rem;font-weight:600;">Forgot
+                    password?</a>
+            </form>
+
+            <div style="text-align:center;margin:25px 0;position:relative;">
+                <div style="height:1px;background:#eee;width:100%;position:absolute;top:50%;z-index:1;"></div>
+                <span
+                    style="background:#fff;padding:0 15px;position:relative;z-index:2;color:#aaa;font-size:.85rem;">Or</span>
+            </div>
+            <button class="btn-outline-full" onclick="openRedCrossKeypad()">Login as Red Cross</button>
+        </div>
+    </div>
+
+    <!-- Red Cross Modal -->
+    <div class="modal-overlay" id="redCrossModal" style="display:none;">
+        <div class="modal-card" id="redCrossInputStep">
+            <div style="font-size:3rem;margin-bottom:16px;">🏥</div>
+            <h2 style="margin-bottom:10px;">Institutional Access</h2>
+            <p style="color:#777;margin-bottom:20px;font-size:.95rem;">Enter your institutional access code to continue.
+            </p>
+            <input type="password" id="accessCodeInput" placeholder="Enter Code"
+                style="width:100%;padding:12px;border:1.5px solid #eee;border-radius:8px;margin-bottom:20px;text-align:center;font-size:1.2rem;outline:none;">
+            <button class="btn-filled-full" onclick="verifyRedCrossCode()">Verify Access</button>
+            <button onclick="closeRedCrossModal()"
+                style="background:none;border:none;color:#aaa;margin-top:15px;cursor:pointer;font-size:.9rem;width:100%;">Cancel</button>
+        </div>
+        <div class="modal-card" id="redCrossSuccessStep" style="display:none;">
+            <div style="font-size:3.5rem;margin-bottom:16px;">✅</div>
+            <h2 style="margin-bottom:10px;">Access Granted!</h2>
+            <p style="color:#777;margin-bottom:30px;">Welcome, Red Cross Partner. Redirecting…</p>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
